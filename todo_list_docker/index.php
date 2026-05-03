@@ -30,7 +30,7 @@ $resultado = $conn->query("SELECT * FROM tareas");
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi App</title>
+    <title>Mi App Dockerizada</title>
     <style>
         body { font-family: sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; padding: 50px; }
         .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }

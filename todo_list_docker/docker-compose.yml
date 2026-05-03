@@ -1,0 +1,24 @@
+services:
+  app:
+    image: tu_usuario/todo_list_docker:latest
+    ports:
+      - "8080:80"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=&Ks*Ko!N78UeMax3
+      - DB_NAME=todo_list_docker_db
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: &Ks*Ko!N78UeMax3
+      MYSQL_DATABASE: todo_list_docker_db
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

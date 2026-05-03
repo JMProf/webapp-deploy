@@ -6,4 +6,4 @@ CREATE TABLE IF NOT EXISTS tareas (
     nombre VARCHAR(255) NOT NULL
 );
 
-INSERT INTO tareas (nombre) VALUES ('Utilizar Ubuntu Server'), ('Desplegar mi aplicación web'), ('Desinstalar Windows');
+INSERT INTO tareas (nombre) VALUES ('Aprender Docker'), ('Desplegar mi aplicación web en Docker'), ('Desinstalar Windows');
