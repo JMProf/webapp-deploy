@@ -7,6 +7,7 @@ Esta práctica muestra dos formas de desplegar una aplicación web sencilla en U
 - [Aplicación básica: Apache + PHP + MySQL](#aplicación-básica-apache--php--mysql)
 - [Aplicación básica en Docker](#aplicación-básica-en-docker)
 - [Aplicación básica con Laravel](#aplicación-básica-con-laravel)
+- [Aplicación básica con Laravel en Docker](#aplicación-básica-con-laravel-en-docker)
 
 # Aplicación básica: Apache + PHP + MySQL
 
@@ -245,3 +246,88 @@ sudo systemctl restart apache2
 ```
 
 Ya podrás visitar la web en `http://IP_ADDRESS/todo_list_laravel/public`.
+
+# Aplicación básica con Laravel en Docker
+
+Para esta parte utilizaremos los ficheros de la carpeta `todo_list_laravel_docker`.
+
+### 1. Instalar Docker
+
+```Bash
+# Add Docker's official GPG key:
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+```
+
+```Bash
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+### 2. Obtener permisos sobre Docker
+
+```Bash
+sudo usermod -aG docker $USER
+```
+
+Para que se apliquen es necesario desconectarse y volver a conectarse al servidor.
+
+### 3. Descargar el repositorio
+
+```Bash
+wget https://github.com/JMProf/webapp-deploy/archive/main.zip
+unzip main.zip
+rm main.zip
+cd webapp-deploy-main/todo_list_laravel_docker
+```
+
+### 4. Crear cuenta en Docker Hub e iniciar sesión
+
+Visita [https://app.docker.com/signup](https://app.docker.com/signup) y crea una cuenta para subir tus contenedores.
+
+Cuando la tengas, inicia sesión en Ubuntu server.
+
+```Bash
+docker login
+```
+
+### 5. Crear el contenedor
+
+Lee detenidamente el fichero `Dockerfile` para comprobar los parámetros con los que se va a crear tu contenedor. Cambia `tu_usuario` por tu nombre de usuario en Docker Hub.
+
+```Bash
+docker build -t tu_usuario/todo_list_laravel_docker:v1 -t tu_usuario/todo_list_laravel_docker:latest .
+```
+
+### 6. Subir el contenedor a Docker Hub
+
+Cambia `tu_usuario` por tu nombre de usuario en Docker Hub.
+
+```Bash
+docker push tu_usuario/todo_list_laravel_docker:v1
+docker push tu_usuario/todo_list_laravel_docker:latest
+```
+
+### 7. Desplegar `docker-dompose`
+
+Edita el fichero `docker-compose.yml` y cambia `tu_usuario` por tu nombre de usuario en Docker Hub.
+
+```Bash
+docker compose up -d
+```
+
+Ya podrás visitar la web en `http://IP_ADDRESS:8000`.

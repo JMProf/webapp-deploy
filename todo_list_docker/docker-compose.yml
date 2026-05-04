@@ -4,7 +4,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      - DB_HOST=db
+      - DB_HOST=db # Apuntamos al contenedor de abajo
       - DB_USER=root
       - DB_PASS=secure-password
       - DB_NAME=todo_list_docker_db
