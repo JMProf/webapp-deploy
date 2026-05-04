@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Tarea; 
+use App\Models\Tarea;
 
 class DatabaseSeeder extends Seeder
 {

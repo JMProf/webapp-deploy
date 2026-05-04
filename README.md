@@ -38,7 +38,7 @@ rm main.zip
 ### 4. Copiar la carpeta con la aplicación al directorio de Apache
 
 ```Bash
-sudo cp webapp-deploy-main/todo_list /var/www/html/
+sudo cp -r webapp-deploy-main/todo_list /var/www/html/
 cd /var/www/html/todo_list/
 ```
 
@@ -186,8 +186,7 @@ rm main.zip
 ### 4. Copiar la carpeta con la aplicación al directorio de Apache
 
 ```Bash
-sudo cp webapp-deploy-main/todo_list_laravel /var/www/html/
-cd /var/www/html/todo_list_laravel/
+sudo cp -r webapp-deploy-main/todo_list_laravel /var/www/html/
 ```
 
 ### 5. Descargar composer
@@ -195,16 +194,24 @@ cd /var/www/html/todo_list_laravel/
 ```Bash
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
-cd /var/www/todo_list_laravel
+cd /var/www/html/todo_list_laravel/
 ```
 
 ### 6. Instalar librerías
 
 ```Bash
+sudo chown -R $USER:$USER /var/www/todo_list_laravel
 composer install --optimize-autoloader --no-dev
 ```
 
-### 7. Crear base de datos y usuario
+### 7. Dar permisos de lectura a Laravel
+
+```Bash
+sudo chown -R www-data:www-data /var/www/html/todo_list_laravel/storage
+sudo chown -R www-data:www-data /var/www/html/todo_list_laravel/bootstrap/cache
+```
+
+### 8. Crear base de datos y usuario
 
 ```Bash
 sudo mysql
@@ -218,17 +225,23 @@ FLUSH PRIVILEGES;
 EXIT;
 ```
 
-### 8. Importar base de datos
+### 9. Importar base de datos
 
 ```Bash
 php artisan migrate --seed
 ```
 
-### 9. Dar permisos de lectura a Laravel
+### 10. Permitir a Laravel modificar URLs en Apache
 
 ```Bash
-sudo chown -R www-data:www-data /var/www/todo_list_laravel/storage
-sudo chown -R www-data:www-data /var/www/todo_list_laravel/bootstrap/cache
+sudo sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+```
+
+### 11. Activar módulo rewrite y reiniciar
+
+```Bash
+sudo a2enmod rewrite
+sudo systemctl restart apache2
 ```
 
 Ya podrás visitar la web en `http://IP_ADDRESS/todo_list_laravel/public`.
