@@ -27,7 +27,7 @@ Para esta parte utilizaremos los ficheros de la carpeta `todo_list`.
 
 ```Bash
 sudo apt update
-sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql -y
+sudo apt install unzip apache2 mysql-server php libapache2-mod-php php-mysql -y
 ```
 
 ### 2. Configurar MySQL de forma segura
@@ -117,8 +117,10 @@ EOF
 sudo apt update
 ```
 
+Instalamos Docker y unzip.
+
 ```Bash
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt install unzip docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 ### 2. Obtener permisos sobre Docker
@@ -183,7 +185,7 @@ Para esta parte utilizaremos los ficheros de la carpeta `todo_list_laravel`.
 
 ```Bash
 sudo apt update
-sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql php-xml php-mbstring php-curl php-zip php-bcmath unzip curl -y
+sudo apt install unzip apache2 mysql-server php libapache2-mod-php php-mysql php-xml php-mbstring php-curl php-zip php-bcmath curl -y
 ```
 
 ### 2. Configurar MySQL de forma segura
@@ -292,8 +294,10 @@ EOF
 sudo apt update
 ```
 
+Instalamos Docker y unzip.
+
 ```Bash
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt install unzip docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 ### 2. Obtener permisos sobre Docker
