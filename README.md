@@ -6,6 +6,7 @@ Esta práctica muestra dos formas de desplegar una aplicación web sencilla en U
 
 - [Aplicación básica: Apache + PHP + MySQL](#aplicación-básica-apache--php--mysql)
 - [Aplicación básica en Docker](#aplicación-básica-en-docker)
+- [Aplicación básica con Laravel](#aplicación-básica-con-laravel)
 
 # Aplicación básica: Apache + PHP + MySQL
 
@@ -162,3 +163,72 @@ docker compose up -d
 ```
 
 Ya podrás visitar la web en `http://IP_ADDRESS:8080`.
+
+# Aplicación básica con Laravel
+
+Para esta parte utilizaremos los ficheros de la carpeta `todo_list_laravel`.
+
+### 1. Instalar el software necesario para lanzar la aplicación, que es el mismo que se utiliza con XAMPP: Apache, PHP y MySQL
+
+```Bash
+sudo apt update
+sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql php-xml php-mbstring php-curl php-zip php-bcmath unzip curl -y
+```
+
+### 2. Descargar el repositorio
+
+```Bash
+wget https://github.com/JMProf/webapp-deploy/archive/main.zip
+unzip main.zip
+rm main.zip
+```
+
+### 4. Copiar la carpeta con la aplicación al directorio de Apache
+
+```Bash
+sudo cp webapp-deploy-main/todo_list_laravel /var/www/html/
+cd /var/www/html/todo_list_laravel/
+```
+
+### 5. Descargar composer
+
+```Bash
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+cd /var/www/todo_list_laravel
+```
+
+### 6. Instalar librerías
+
+```Bash
+composer install --optimize-autoloader --no-dev
+```
+
+### 7. Crear base de datos y usuario
+
+```Bash
+sudo mysql
+```
+
+```SQL
+CREATE DATABASE todo_list_laravel_db;
+CREATE USER 'laravel_user'@'localhost' IDENTIFIED BY 'my-secure-password';
+GRANT ALL PRIVILEGES ON todo_list_laravel_db.* TO 'laravel_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+### 8. Importar base de datos
+
+```Bash
+php artisan migrate --seed
+```
+
+### 9. Dar permisos de lectura a Laravel
+
+```Bash
+sudo chown -R www-data:www-data /var/www/todo_list_laravel/storage
+sudo chown -R www-data:www-data /var/www/todo_list_laravel/bootstrap/cache
+```
+
+Ya podrás visitar la web en `http://IP_ADDRESS/todo_list_laravel/public`.
