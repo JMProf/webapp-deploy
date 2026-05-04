@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "user_db";
-$pass = "&Ks*Ko!N78UeMax3"; // CAMBIAR EN PRODUCCIÓN, NO USAR SÍMBOLO $
+$pass = "My-secure-password1"; // CAMBIAR EN PRODUCCIÓN, NO USAR SÍMBOLO $
 $db   = "todo_list_db";
 
 // Crear la conexión

@@ -1,6 +1,16 @@
 # webapp-deploy
 
-Esta práctica muestra dos formas de desplegar una aplicación web sencilla en Ubuntu Server. Una utilizando el entorno LAMP (similar a XAMPP en Windows) y otra creando y lanzando la aplicación como un contenedor en Docker.
+Esta práctica muestra cuatro formas de desplegar una aplicación web sencilla en Ubuntu Server 24.04:
+
+- La primera forma utiliza el entorno LAMP (similar a XAMPP en Windows) para desplegar una aplicación sin *frameworks*.
+
+- La segunda utiliza Docker para crear un contenedor a partir de esta aplicación.
+
+- La tercera emplea Laravel como *framework* para el desarrollo de la aplicación.
+
+- La cuarta utiliza Docker para crear un contenedor a partir de la aplicación desarrollada con Laravel.
+
+Para poder acceder a las aplicaciones desplegadas con Docker es necesario abrir los puertos `8000` y `8080` en el *firewall*.
 
 # Índice
 
@@ -60,7 +70,7 @@ sudo mysql -u root
 
 ```SQL
 CREATE DATABASE IF NOT EXISTS todo_list_db;
-CREATE USER IF NOT EXISTS 'user_db'@'localhost' IDENTIFIED BY '&Ks*Ko!N78UeMax3';
+CREATE USER IF NOT EXISTS 'user_db'@'localhost' IDENTIFIED BY 'My-secure-password1';
 GRANT ALL PRIVILEGES ON todo_list_db.* TO 'user_db'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
@@ -176,7 +186,15 @@ sudo apt update
 sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql php-xml php-mbstring php-curl php-zip php-bcmath unzip curl -y
 ```
 
-### 2. Descargar el repositorio
+### 2. Configurar MySQL de forma segura
+
+```Bash
+sudo mysql_secure_installation
+```
+
+Podemos responder afirmativamente a todo y escoger el filtro de contraseñas más fuerte.
+
+### 3. Descargar el repositorio
 
 ```Bash
 wget https://github.com/JMProf/webapp-deploy/archive/main.zip
@@ -201,7 +219,7 @@ cd /var/www/html/todo_list_laravel/
 ### 6. Instalar librerías
 
 ```Bash
-sudo chown -R $USER:$USER /var/www/todo_list_laravel
+sudo chown -R $USER:$USER /var/www/html/todo_list_laravel
 composer install --optimize-autoloader --no-dev
 ```
 
@@ -220,7 +238,7 @@ sudo mysql
 
 ```SQL
 CREATE DATABASE todo_list_laravel_db;
-CREATE USER 'laravel_user'@'localhost' IDENTIFIED BY 'my-secure-password';
+CREATE USER 'laravel_user'@'localhost' IDENTIFIED BY 'My-secure-password1';
 GRANT ALL PRIVILEGES ON todo_list_laravel_db.* TO 'laravel_user'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
