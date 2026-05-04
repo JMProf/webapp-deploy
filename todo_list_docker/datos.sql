@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS todo_list_db;
-USE todo_list_db;
+CREATE DATABASE IF NOT EXISTS todo_list_docker_db;
+USE todo_list_docker_db;
 
 CREATE TABLE IF NOT EXISTS tareas (
     id INT AUTO_INCREMENT PRIMARY KEY,

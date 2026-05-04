@@ -115,6 +115,8 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 sudo usermod -aG docker $USER
 ```
 
+Para que se apliquen es necesario desconectarse y volver a conectarse al servidor.
+
 ### 3. Descargar el repositorio
 
 ```Bash
@@ -124,13 +126,19 @@ rm main.zip
 cd webapp-deploy-main/todo_list_docker
 ```
 
-### 4. Crear cuenta en Docker Hub
+### 4. Crear cuenta en Docker Hub e iniciar sesión
 
 Visita [https://app.docker.com/signup](https://app.docker.com/signup) y crea una cuenta para subir tus contenedores.
 
+Cuando la tengas, inicia sesión en Ubuntu server.
+
+```Bash
+docker login
+```
+
 ### 5. Crear el contenedor
 
-Lee detenidamente el fichero `Dockerfile` para comprobar los parámetros con los que se va a crear tu contenedor.
+Lee detenidamente el fichero `Dockerfile` para comprobar los parámetros con los que se va a crear tu contenedor. Cambia `tu_usuario` por tu nombre de usuario en Docker Hub.
 
 ```Bash
 docker build -t tu_usuario/todo_list_docker:v1 -t tu_usuario/todo_list_docker:latest .
@@ -138,12 +146,16 @@ docker build -t tu_usuario/todo_list_docker:v1 -t tu_usuario/todo_list_docker:la
 
 ### 6. Subir el contenedor a Docker Hub
 
+Cambia `tu_usuario` por tu nombre de usuario en Docker Hub.
+
 ```Bash
 docker push tu_usuario/todo_list_docker:v1
 docker push tu_usuario/todo_list_docker:latest
 ```
 
 ### 7. Desplegar `docker-dompose`
+
+Edita el fichero `docker-compose.yml` y cambia `tu_usuario` por tu nombre de usuario en Docker Hub.
 
 ```Bash
 docker compose up -d
