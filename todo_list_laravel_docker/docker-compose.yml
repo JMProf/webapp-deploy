@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: tu_usuario/todo_list__laravel_docker:latest
+    image: tu_usuario/todo_list_laravel_docker:latest
     ports:
       - "8000:80"
     environment:
